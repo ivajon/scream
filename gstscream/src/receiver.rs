@@ -1,5 +1,6 @@
 #![allow(clippy::uninlined_format_args)]
 extern crate failure;
+use clap::Parser;
 use failure::Error;
 
 use std::env;
@@ -12,16 +13,25 @@ use gst::prelude::*;
 
 extern crate chrono;
 
+#[derive(clap::Parser)]
+#[command(version, about, long_about = None)]
+struct Arguments {
+    #[arg(env)]
+    /// The gstreamer pipeline to use for the receiver application.
+    recvpipeline: String,
+}
+
 fn main() {
+    let args = Arguments::parse();
     gst::init().expect("Failed to initialize");
 
     let main_loop = glib::MainLoop::new(None, false);
 
-    start(&main_loop).expect("Failed to start");
+    start(&main_loop, args).expect("Failed to start");
 }
 
-pub fn start(main_loop: &glib::MainLoop) -> Result<(), Error> {
-    let pls: String = env::var("RECVPIPELINE").unwrap();
+fn start(main_loop: &glib::MainLoop, args: Arguments) -> Result<(), Error> {
+    let pls: String = args.recvpipeline;
     println!("RECVPIPELINE={}", pls);
     let pipeline = gst::parse::launch(&pls).unwrap();
 
@@ -42,7 +52,6 @@ pub fn start(main_loop: &glib::MainLoop) -> Result<(), Error> {
         .add_watch(move |_, msg| {
             use gst::MessageView;
 
-            // println!("bus {:?}", msg.view());
             let main_loop = &main_loop_clone;
             match msg.view() {
                 MessageView::Eos(..) => {
