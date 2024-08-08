@@ -1,0 +1,27 @@
+name: gstcream-clippy-docs
+
+# Only run the CI on PR to master.
+on:
+  pull_request:
+    branches:
+      - master
+jobs:
+  check:
+      runs-on: ubuntu-20.04
+      steps:
+        - name: install-rust
+          run: curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+        - name: run clippy
+          run: |
+            cd gstscream
+            cargo clippy 
+        -name: run doc 
+          run: |
+            cd gstscream
+            cargo doc
+        -name: run test
+          run: |
+            cd gstscream
+            cargo test
+
+
