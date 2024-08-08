@@ -1,6 +1,5 @@
 #![allow(clippy::uninlined_format_args)]
 use std::convert::TryInto;
-use std::env;
 use std::fs::File;
 use std::io::Write;
 use std::sync::{Arc, Mutex};

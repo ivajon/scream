@@ -1,4 +1,6 @@
-#![allow(clippy::uninlined_format_args)]
+#![deny(clippy::all)]
+#![deny(warnings)]
+
 use clap::Parser;
 use failure::Error;
 use std::process::exit;

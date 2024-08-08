@@ -1,9 +1,9 @@
-#![allow(clippy::uninlined_format_args)]
+#![deny(clippy::all)]
+#![deny(warnings)]
+
 extern crate failure;
 use clap::Parser;
 use failure::Error;
-
-use std::env;
 
 extern crate gtypes;
 
