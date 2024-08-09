@@ -5,24 +5,25 @@ on:
   pull_request:
     branches:
       - master
+
+env:
+  CARGO_TERM_COLOR: always
+
 jobs:
-  check:
-    name: check
-    runs-on: ubuntu-20.04
+  build:
+    runs-on: ubuntu-latest
     steps:
-        - name: install-rust
-          run: curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-        - name: run clippy
-          run: |
-            cd gstscream
-            cargo clippy 
-        -name: run doc 
-          run: |
-            cd gstscream
-            cargo doc
-        -name: run test
-          run: |
-            cd gstscream
-            cargo test
-
-
+    - uses: actions/checkout@v4
+    - name: Run docs
+      run: |
+        cd gstscream \
+        cargo doc
+        
+    - name: Clippy
+      run: |
+        cd gstscream \
+        cargo clippy
+    - name: Run tests
+      run: |
+        cd gstscream \
+        cargo test
