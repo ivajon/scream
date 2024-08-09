@@ -19,14 +19,14 @@ jobs:
     - uses: actions/checkout@v4
     - name: Run docs
       run: |
-        cd gstscream \
+        cd gstscream 
         cargo doc
         
     - name: Clippy
       run: |
-        cd gstscream \
+        cd gstscream 
         cargo clippy
     - name: Run tests
       run: |
-        cd gstscream \
+        cd gstscream
         cargo test
